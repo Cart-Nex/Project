@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CartNex Login / Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #1e88e5, #42a5f5);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-box {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .auth-box h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .auth-box input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .auth-box button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background: #1e88e5;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .auth-box button:hover {
+      background: #1565c0;
+    }
+
+    .toggle-link {
+      background: none;
+      border: none;
+      color: #1e88e5;
+      margin-top: 15px;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-box">
+    <h2 id="form-title">Login to CartNex</h2>
+    <form id="auth-form">
+      <input type="text" id="username" class="hidden" placeholder="Username" />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit" id="submit-btn">Login</button>
+    </form>
+    <button class="toggle-link" onclick="toggleForm()">Don't have an account? Sign Up</button>
+  </div>
+
+  <script>
+    let isSignup = false;
+
+    function toggleForm() {
+      isSignup = !isSignup;
+      document.getElementById('form-title').textContent = isSignup ? 'Create Your CartNex Account' : 'Login to CartNex';
+      document.getElementById('submit-btn').textContent = isSignup ? 'Sign Up' : 'Login';
+      document.querySelector('.toggle-link').textContent = isSignup ? 'Already have an account? Login' : "Don't have an account? Sign Up";
+      document.getElementById('username').classList.toggle('hidden', !isSignup);
+    }
+
+    document.getElementById('auth-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value;
+
+      if (isSignup) {
+        // Save the new user's data
+        const userData = { username, email, password };
+        localStorage.setItem('cartnexUser', JSON.stringify(userData));
+        alert(`Signup Successful!\nUsername: ${username}\nEmail: ${email}`);
+        window.location.href = 'w.html';
+      } else {
+        const storedUser = JSON.parse(localStorage.getItem('cartnexUser'));
+        if (storedUser && storedUser.email === email && storedUser.password === password) {
+          alert(`Login Successful!\nEmail: ${email}`);
+          window.location.href = 'w.html';
+        } else {
+          alert('Invalid email or password. Please sign up or check your credentials.');
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

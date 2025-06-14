@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shop - CartNex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f7fb;
+    }
+
+    header {
+      background-color: #1e88e5;
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .cart-link {
+      text-decoration: none;
+      background: white;
+      color: #1e88e5;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .cart-link:hover {
+      background: #cce3ff;
+    }
+
+    .main {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .main h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    #searchInput {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+      padding: 0 10px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-align: left;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card h3 {
+      margin-bottom: 5px;
+      font-size: 18px;
+      color: #1e88e5;
+    }
+
+    .product-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .add-to-cart {
+      margin-top: 12px;
+      background: #1e88e5;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .add-to-cart:hover {
+      background: #1565c0;
+    }
+
+    img.swipe-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">CartNex Shop</div>
+    <div>
+      <a href="w.html" class="cart-link" style="margin-right: 10px;">🏠 Home</a>
+      <a href="c.html" class="cart-link">🛒 Cart</a>
+    </div>
+  </header>
+
+<div class="main">
+  <h1>Shop Trending Products</h1>
+  <input
+    type="text"
+    id="search-input"
+    placeholder="Search for items..."
+    style="padding: 10px; width: 80%; max-width: 400px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; margin-top: 20px;"
+  />
+  <div class="products" id="product-list">
+    <!-- Products will be added here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  const products = [
+    {
+      id: 1,
+      name: "Black and white Sneakers",
+      description: "Sneakers now available in sizes: 42-46",
+      price: 28300,
+      images: [
+        "/storage/emulated/0/Documents/CartNex/items/aggysneakers.jpg"  ]
+    },
+    {
+      id: 2,
+      name: "Moschino Milano Ladys Top",
+      description: "Moschino Tops, available in red, white, black and yellow colour.",
+      price: 10000,
+      images: [
+        "/storage/emulated/0/Documents/CartNex/items/aggytops.jpg",
+      ]
+    },
+    {
+      id: 3,
+      name: "Zara Polo",
+      description: "Size free, available in different colours and designs.",
+      price: 10000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggyzaratops.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/aggyzaratop.jpg"
+      ]
+    },
+    {
+      id: 4,
+      name: "Quality Blue Baggy Jeans",
+      description: "High quality baggy jeans joggers, blue colour.",
+      price: 25500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggyjeans~2.jpg"
+      ]
+    },
+    {
+      id: 5,
+      name: "Cap & Bag Combo",
+      description: "Available in different colours and brand designs.",
+      price: 18200,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggycombo.jpg"
+      ]
+      },
+    {
+      id: 6,
+      name: "Quality Baggy Jeans",
+      description: "only 3 types and 2 colours available.",
+      price: 26400,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggyjeans2.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/aggyjeans1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/aggyjeanss.jpg"
+      ]
+      },
+    {
+      id: 7,
+      name: "High Fashion Timberland",
+      description: "Also available in different styles and colours. shoe sizes: 42 - 46",
+      price: 30200,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggytimberland1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/aggytimberland3.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/aggytimberland2.jpg"
+      ]
+      },
+    {
+      id: 8,
+      name: "Black Unique Timberland",
+      description: "quality clean black shoe, sizes:42 - 46.",
+      price: 29750,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggytimberland.jpg"
+      ]
+      },
+    {
+      id: 9,
+      name: "Classic Celebrity hand bag",
+      description: "Available in the displayed colours and designs.",
+      price: 51000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggybag.jpg"
+      ]
+      },
+    {
+      id: 10,
+      name: "Louis Vuitton Pams",
+      description: "high quality footwear, sizes: 37 - 41",
+      price: 13000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggypams.jpg"
+      ]
+      },
+    {
+      id: 11,
+      name: "Mini handbag and purse",
+      description: "Available in the displayed colours.",
+      price: 25000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggybag1.jpg"
+      ]
+      },
+    {
+      id: 12,
+      name: "Luxury Givenchy Leather Slippers",
+      description: "available in the displayed colours, fully boxed, sizes: 37 - 41.",
+      price: 18000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggyslippers1.jpg"
+      ]
+      },
+    {
+      id: 13,
+      name: "Mini handbag and purse",
+      description: "Available in the displayed colours.",
+      price: 27450,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggybag1.jpg"
+      ]
+      },
+    {
+      id: 14,
+      name: "Bag and Slippers Combo",
+      description: "slippers 17k, bag 28.1k",
+      price: 45100,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggycomboo.jpg"
+      ]
+      },
+    {
+      id: 15,
+      name: "Cap and Bag Combo",
+      description: "Available as displayed.",
+      price: 18500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggycomboo1.jpg"
+      ]
+      },
+    {
+      id: 16,
+      name: "Christian Dior Hand bag",
+      description: "Available as displayed.",
+      price: 18500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggybagg.jpg"
+      ]
+      },
+    {
+      id: 17,
+      name: "Youth Water Bottles",
+      description: "Available as displayed.",
+      price: 7000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakieyouthbottle.jpg"
+      ]
+      },
+    {
+      id: 18,
+      name: "Vacuum Bottles",
+      description: "holds water at any temperature for a long time, available in the displayed colours.",
+      price: 9500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakievacuumbottles3.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakievacuumbottles4.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakievacuumbottles1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/Jakievacuumbottles.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakievacuumbottles2.jpg"
+      ]
+      },
+    {
+      id: 19,
+      name: "Cap and Bag Combo",
+      description: "Available as displayed.",
+      price: 18000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggycomboo1.jpg"
+      ]
+      },
+    {
+      id: 20,
+      name: "Compressed towel",
+      description: "1 pcs",
+      price: 3000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/Jakiecompressedtowel.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiecompressedtowel1.jpg"
+      ]
+      },
+    {
+      id: 21,
+      name: "Tea Cup Set",
+      description: "9k for each.",
+      price: 9000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakieteacupset1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakieteacupset2.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakieteacupset.jpg"
+      ]
+      },
+    {
+      id: 22,
+      name: "Brown Quality TimberLand",
+      description: "thick, smooth and high quality fashion timberland shoe, available in the displayed colour, sizes: 42 - 46",
+      price: 45000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/aggytimberland1.jpg"
+      ]
+      },
+    {
+      id: 23,
+      name: "Compressed towel",
+      description: "2 pcs",
+      price: 4800,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/Jakiecompressedtowel.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiecompressedtowel1.jpg"
+      ]
+      },
+    {
+      id: 24,
+      name: "Table Ring Light",
+      description: "1 pcs",
+      price: 13000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakietableringlight1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakietableringlight.jpg"
+      ]
+      },
+    {
+      id: 25,
+      name: "Cat Tote Handbag",
+      description: "avaiable as displayed",
+      price: 9500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakiehandbag.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiehandbag1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiehandbag2.jpg"
+      ]
+      },
+    {
+      id: 26,
+      name: "Tape and Key Holder",
+      description: "two in one, tape and key holder, availble as displayed",
+      price: 3700,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakietap&keyholder1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakietap&keyholder.jpg"
+      ]
+      },
+  {
+      id: 27,
+      name: "Water Bottle with Phone Holder",
+      description: "1 pcs",
+      price: 8000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakiebottle&phoneholder.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiebottle&phoneholder1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiebottle&phoneholder2.jpg"
+      ]
+      },
+  {
+      id: 28,
+      name: "Super Fresh Customized Fashion Polo",
+      description: "Fantastic wears, available in the different colours and designs",
+      price: 28000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/LDblacktops.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/LDblacktops1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/LDblacktops4.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/LDblacktops2.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/LDblacktops4.jpg"
+      ]
+      },
+  {
+      id: 29,
+      name: "Pocket Phone Stand",
+      description: "1 pcs",
+      price: 6000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakiepocketstand2.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiepocketstand4.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiepocketstand3.jpg"
+      ]
+      },
+  {
+      id: 30,
+      name: "Pink clear earring",
+      description: "available as displayed",
+      price: 3000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicoleearrings.jpg"
+      ]
+      },
+  {
+      id: 31,
+      name: "Red Customized Fashion Polo",
+      description: "BrokenHearts customised polo, available as displayed",
+      price: 27800,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/LDblackredtop.jpg"
+      ]
+      },
+  {
+      id: 32,
+      name: "Black and purple fashion necklace",
+      description: "luxurious touches, unique types, available as displayed",
+      price: 23000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolenecklace.jpg"
+      ]
+      },
+  {
+      id: 33,
+      name: "Blue Earrings",
+      description: "1 pair",
+      price: 6750,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicoleearrings1.jpg"
+      ]
+      },
+  {
+      id: 34,
+      name: "Empty Fashion Polo",
+      description: "available as displayed",
+      price: 27900,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/LDblackemptytop.jpg"
+      ]
+      },
+  {
+      id: 35,
+      name: "Self Care Kits",
+      description: "princess self care kits available, in the different colours as displayed",
+      price: 9800,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakieselfcarekit.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/selfcarekit1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/selfcarekit.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/selfcarekit3.jpg"
+      ]
+      },
+  {
+      id: 36,
+      name: "Mini Printer",
+      description: "portable mini printers, available as displayed",
+      price: 30500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakieminiprinter1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakieminiprinter2.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakieminiprinter.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakieminiprinter3.jpg"
+      ]
+      },
+  {
+      id: 37,
+      name: "Monarch Fashion Tops",
+      description: "Monarch fashion polos, available as displayed",
+      price: 27700,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/LDblackfashiontopp3.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/LDblackfashiontopp4.jpg"
+      ]
+      },
+  {
+      id: 38,
+      name: "Customized Fashion Polo",
+      description: "defenders customized fashion top available as displayed",
+      price: 28300,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/LDblackfashiontopp2.jpg"
+      ]
+      },
+  {
+      id: 39,
+      name: "Clean Designed Cover Cups",
+      description: "Cover cups with strong glass, available as displayed",
+      price: 8500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/covercups.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/covercups1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiecovercups.jpg"
+      ]
+      },
+  {
+      id: 40,
+      name: "Saints Customized Fashion Top",
+      description: "saints customized polo, available as displayed",
+      price: 28800,
+        images: [ "/storage/emulated/0/Documents/CartNex/items/LDblackfashiontopp.jpg"
+      ]
+      },
+  {
+      id: 41,
+      name: "Legacy Fashion Polo",
+      description: "Legacy top, available as displayed",
+      price: 30000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/LDblackfashiontopp1.jpg"
+      ]
+      },
+  {
+      id: 42,
+      name: "Oraimo FreePods",
+      description: "Oraimo earpods, available as displayed",
+      price: 18000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/frankearpods.jpg"
+      ]
+      },
+  {
+      id: 43,
+      name: "Floral Necklace",
+      description: "quality necklaces, available as displayed",
+      price: 20000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/Nicolesnecklace.jpg"
+      ]
+      },
+  {
+      id: 44,
+      name: "Crystal Sea Blue earrings",
+      description: "available as displayed",
+      price: 7500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicoleearrings1.jpg"
+      ]
+      },
+  {
+      id: 45,
+      name: "New Age Wireless Earbuds",
+      description: "white new age wireless earpod, available as displayed",
+      price: 17500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/frankearpods1.jpg"
+      ]
+      },
+  {
+      id: 46,
+      name: "Empty Fashion Polo",
+      description: "available as displayed",
+      price: 35000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/LDblackemptytop.jpg"
+      ]
+      },
+  {
+      id: 47,
+      name: "Unisex Moonlight Necklace",
+      description: "Unisex necklace, available as displayed",
+      price: 14500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace4.jpg"
+      ]
+      },
+  {
+      id: 48,
+      name: "Customized Necklace, Small",
+      description: "Customized, 7.3k for small and 10.2k for big. also available as displayed",
+      price: 7300,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace6.jpg"
+      ]
+      },
+  {
+      id: 49,
+      name: "Quality Water Bottles",
+      description: "water bottles available as displayed",
+      price: 6000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakiewaterbottles.jpg"
+      ]
+      },
+  {
+      id: 50,
+      name: "2 Two Piece Couple Necklaces",
+      description: "available as displayed",
+      price: 23000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace1.jpg"
+      ]
+      },
+  {
+      id: 51,
+      name: "Customized Necklace, Big",
+      description: "Customized, 7.3k for small and 10.2k for big. also available as displayed",
+      price: 10200,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace6.jpg"
+      ]
+      },
+  {
+      id: 52,
+      name: "Turquoise Love Necklace",
+      description: "available in different colours",
+      price: 13000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace2.jpg"
+      ]
+      },
+  {
+      id: 53,
+      name: "1 Two Piece Couple Necklaces",
+      description: "available as displayed",
+      price: 13000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace1.jpg"
+      ]
+      },
+  {
+      id: 54,
+      name: "Tear Drop Earrings",
+      description: "available in any colour",
+      price: 5500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace3.jpg"
+      ]
+      },
+  {
+      id: 55,
+      name: "Clairite Necklace",
+      description: "available as displayed",
+      price: 12500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace5.jpg"
+      ]
+      },
+  {
+      id: 56,
+      name: "Crystal Drop Necklace and Earrings",
+      description: "available as displayed",
+      price: 18500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace7.jpg"
+      ]
+      },
+  {
+      id: 57,
+      name: "Phone Stand",
+      description: "Phone stand available as displayed",
+      price: 6000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakiemicstand.jpg"
+      ]
+      },
+  {
+      id: 58,
+      name: "Cross Necklaces",
+      description: "available as displayed",
+      price: 18000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolenecklacee2.jpg"
+      ]
+      },
+  {
+      id: 59,
+      name: "Crystal Necklace",
+      description: "crystal necklace with red theme, available as displayed",
+      price: 17500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolenecklacee1.jpg"
+      ]
+      },
+  {
+      id: 60,
+      name: "Butterfly Necklace",
+      description: "available as displayed",
+      price: 4500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolenecklacee.jpg"
+      ]
+      },
+  {
+      id: 61,
+      name: "Butterfly Chain Key Holder",
+      description: "available as displayed",
+      price: 5800,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolekeyholder.jpg"
+      ]
+      },
+  {
+      id: 62,
+      name: "Butterfly Earrings, Big",
+      description: "available as displayed",
+      price: 5000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicoleearringss.jpg"
+      ]
+      },
+  {
+      id: 63,
+      name: "Butterfly Earrings",
+      description: "available as displayed",
+      price: 2800,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicoleearringss1.jpg"
+      ]
+      },
+  {
+      id: 64,
+      name: "Love Necklace",
+      description: "available as displayed",
+      price: 12000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolesnecklace8.jpg"
+      ]
+      },
+  {
+      id: 65,
+      name: "Floral Bangle",
+      description: "1 pcs, available as displayed",
+      price: 5000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/Nicolebangles2.jpg"
+      ]
+      },
+  {
+      id: 66,
+      name: "Floral Bangle, Small",
+      description: "1 pcs, available as displayed",
+      price: 4500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolebangles1.jpg"
+      ]
+      },
+  {
+      id: 67,
+      name: "Bangle Cuff",
+      description: "available as displayed",
+      price: 6500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolebangles3.jpg"
+      ]
+      },
+  {
+      id: 68,
+      name: "Nix Floral Bangle",
+      description: "available as displayed",
+      price: 6500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolebangles.jpg"
+      ]
+      },
+  {
+      id: 69,
+      name: "Floral Bangle",
+      description: "2 pcs, available as displayed",
+      price: 8800,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/Nicolebangles2.jpg"
+      ]
+      },
+  {
+      id: 70,
+      name: "Clear Floral Necklaces",
+      description: "available as displayed",
+      price: 8500,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/nicolelilynecklace.jpg"
+      ]
+      },
+  {
+      id: 71,
+      name: "P100 Smart Watch",
+      description: "water resistance and other cool features, available as displayed",
+      price: 55400,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakiesmartwatch.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiesmartwatch1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiesmartwatch2.jpg"
+      ]
+      },
+  {
+      id: 72,
+      name: "Strong Clippers",
+      description: "available as displayed",
+      price: 9900,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakieclipper.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakieclipper1.jpg"
+      ]
+      },
+  {
+      id: 73,
+      name: "5 in 1 face towel",
+      description: "available as displayed",
+      price: 9850,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakietowell.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakietowell1.jpg"
+      ]
+      },
+  {
+      id: 74,
+      name: "Cool Designed Water Bottle",
+      description: "colours will be given at random",
+      price: 5900,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakiebottlee.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiebottlee3.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiebottlee4.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiebottlee2.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiebottlee1.jpg"
+    
+      ]
+      },
+  {
+      id: 75,
+      name: "Rubber Basket",
+      description: "available as displayed",
+      price: 4600,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakiebasket.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiebasket1.jpg",
+                "/storage/emulated/0/Documents/CartNex/items/jakiebasket2.jpg"
+      ]
+      },
+  {
+      id: 76,
+      name: "2 in 1 towel",
+      description: "availablein the different colours as displayed",
+      price: 10000,
+      images: [ "/storage/emulated/0/Documents/CartNex/items/jakietowel.jpg"
+      ]
+      }
+
+    // Add more products with multiple images the same way...
+  ];
+
+  const productList = document.getElementById("product-list");
+  const searchInput = document.getElementById("search-input");
+
+  function displayProducts(filteredProducts) {
+    productList.innerHTML = "";
+
+    filteredProducts.forEach((product) => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+
+      const img = document.createElement("img");
+      img.src = product.images[0];
+      img.alt = product.name;
+      img.style = "width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px;";
+      img.dataset.index = "0";
+
+      img.addEventListener("click", () => {
+        let currentIndex = parseInt(img.dataset.index);
+        currentIndex = (currentIndex + 1) % product.images.length;
+        img.src = product.images[currentIndex];
+        img.dataset.index = currentIndex;
+      });
+
+      const title = document.createElement("h3");
+      title.textContent = product.name;
+
+      const desc = document.createElement("p");
+      desc.textContent = product.description;
+
+      const price = document.createElement("div");
+      price.className = "price";
+      price.textContent = "₦" + product.price.toLocaleString();
+
+      const btn = document.createElement("button");
+      btn.className = "add-to-cart";
+      btn.textContent = "Add to Cart";
+      btn.onclick = () => addToCart(product);
+
+      card.appendChild(img);
+      card.appendChild(title);
+      card.appendChild(desc);
+      card.appendChild(price);
+      card.appendChild(btn);
+
+      productList.appendChild(card);
+    });
+  }
+
+  function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${product.name} added to cart!`);
+  }
+
+  // Show all products initially
+  displayProducts(products);
+
+  // Filter products as you type
+  searchInput.addEventListener("input", () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm) ||
+      product.description.toLowerCase().includes(searchTerm)
+    );
+    displayProducts(filtered);
+  });
+</script>
+
+</body>
+</html>
