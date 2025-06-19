@@ -225,7 +225,7 @@
 
       target.onclick = function () {
         gameArea.removeChild(target);
-        let earned = Math.floor(Math.random() * 10) + 5;
+        let earned = Math.floor(Math.random() * 25) + 5;
         balance += earned;
         localStorage.setItem("cartnexBalance", balance);
         balanceDisplay.textContent = balance;
